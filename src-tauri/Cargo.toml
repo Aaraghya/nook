@@ -1,0 +1,32 @@
+[package]
+name = "pocket"
+version = "0.1.0"
+description = "A lightweight personal desktop companion for Windows"
+edition = "2021"
+
+# Tauri convention: the mobile/embedded lib targets need a distinct crate
+# name so they never clash with the `pocket` binary on Windows.
+[lib]
+name = "pocket_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri = { version = "2", features = [] }
+
+# Tokio arrives with Milestone 3/4 for async media + clipboard work;
+# tauri already runs its own async runtime, so none is added yet.
+
+# Lean dev profile: this machine was disk-starved during the first build
+# (full debuginfo across the Tauri stack writes several GB of rlibs).
+# Drop debuginfo + incremental cache to keep dev builds small and reliable.
+# If the disk has room later, `debug = "line-tables-only"` restores usable
+# panic backtraces.
+[profile.dev]
+debug = false
+incremental = false
+
