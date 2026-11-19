@@ -31,7 +31,7 @@ export function TitleBar() {
         <IconButton
           label="Minimize"
           size="sm"
-          onClick={() => void appWindow.minimize()}
+          onClick={() => void appWindow.hide()}
         >
           <Minus size={14} strokeWidth={1.75} />
         </IconButton>
