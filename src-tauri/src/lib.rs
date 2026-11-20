@@ -34,7 +34,17 @@ pub fn run() {
         ))
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .on_window_event(system::handle_window_event)
-        .setup(|app| system::setup(app))
+        .invoke_handler(tauri::generate_handler![
+            commands::music::music_get_state,
+            commands::music::music_play_pause,
+            commands::music::music_next,
+            commands::music::music_previous,
+        ])
+        .setup(|app| {
+            system::setup(app)?;
+            music::init(app.handle());
+            Ok(())
+        })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

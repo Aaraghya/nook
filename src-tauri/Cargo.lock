@@ -2762,6 +2762,7 @@ dependencies = [
 name = "pocket"
 version = "0.1.0"
 dependencies = [
+ "base64 0.23.1",
  "serde",
  "serde_json",
  "tauri",
@@ -2769,6 +2770,7 @@ dependencies = [
  "tauri-plugin-autostart",
  "tauri-plugin-global-shortcut",
  "tauri-plugin-single-instance",
+ "windows",
 ]
 
 [[package]]
