@@ -39,10 +39,15 @@ pub fn run() {
             commands::music::music_play_pause,
             commands::music::music_next,
             commands::music::music_previous,
+            commands::clipboard::clipboard_get_entries,
+            commands::clipboard::clipboard_copy,
+            commands::clipboard::clipboard_toggle_pin,
+            commands::clipboard::clipboard_delete,
         ])
         .setup(|app| {
             system::setup(app)?;
             music::init(app.handle());
+            clipboard::init(app.handle());
             Ok(())
         })
         .run(tauri::generate_context!())

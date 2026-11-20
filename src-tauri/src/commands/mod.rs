@@ -5,4 +5,5 @@
 //! file per feature area once Milestone 3+ begins; register them in
 //! `lib.rs` via `tauri::Builder::invoke_handler`.
 
+pub mod clipboard;
 pub mod music;
