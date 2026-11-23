@@ -13,6 +13,8 @@
 //! - `storage`   — SQLite pool management + migrations
 //! - `state`     — shared application state containers
 
+use tauri::Manager;
+
 mod clipboard;
 mod commands;
 mod music;
@@ -43,8 +45,20 @@ pub fn run() {
             commands::clipboard::clipboard_copy,
             commands::clipboard::clipboard_toggle_pin,
             commands::clipboard::clipboard_delete,
+            commands::notes::notes_list,
+            commands::notes::notes_create,
+            commands::notes::notes_update,
+            commands::notes::notes_toggle_pin,
+            commands::notes::notes_delete,
+            commands::snippets::snippets_list,
+            commands::snippets::snippets_create,
+            commands::snippets::snippets_update,
+            commands::snippets::snippets_delete,
+            commands::snippets::snippets_copy,
         ])
         .setup(|app| {
+            let connection = storage::init(app.handle())?;
+            app.manage(storage::Db(std::sync::Mutex::new(connection)));
             system::setup(app)?;
             music::init(app.handle());
             clipboard::init(app.handle());

@@ -7,3 +7,5 @@
 
 pub mod clipboard;
 pub mod music;
+pub mod notes;
+pub mod snippets;
