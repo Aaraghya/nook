@@ -1,5 +1,5 @@
 import { Check, ClipboardList, Copy, Pin, PinOff, Trash2 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   copyClipboardEntry,
   deleteClipboardEntry,
@@ -10,11 +10,13 @@ import {
 import { useClipboardStore } from "../../stores/clipboard";
 import { EmptyState } from "../common/EmptyState";
 import { IconButton } from "../common/IconButton";
+import { SearchInput } from "../common/SearchInput";
 
 const COPY_FEEDBACK_MS = 1200;
 
 export function ClipboardPanel() {
   const entries = useClipboardStore((s) => s.entries);
+  const [query, setQuery] = useState("");
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const feedbackTimer = useRef<number | null>(null);
 
@@ -41,6 +43,14 @@ export function ClipboardPanel() {
       }
     };
   }, []);
+
+  const visibleEntries = useMemo(() => {
+    const needle = query.trim().toLowerCase();
+    if (needle === "") return entries;
+    return entries.filter((entry) =>
+      entry.content.toLowerCase().includes(needle),
+    );
+  }, [entries, query]);
 
   const handleCopy = (id: string) => {
     copyClipboardEntry(id)
@@ -75,15 +85,26 @@ export function ClipboardPanel() {
         <h2 className="text-[13px] font-semibold">Clipboard</h2>
         <span className="text-[11px] text-ink-muted">ClipStack</span>
       </header>
+      <SearchInput
+        value={query}
+        onChange={setQuery}
+        placeholder="Search clips"
+      />
       {entries.length === 0 ? (
         <EmptyState
           icon={ClipboardList}
           title="No clips yet"
           hint="Copy anything and it will land here, ready to paste again."
         />
+      ) : visibleEntries.length === 0 ? (
+        <EmptyState
+          icon={ClipboardList}
+          title="No matches"
+          hint="Try a different word or clear the search."
+        />
       ) : (
         <div className="min-h-0 flex-1 space-y-2 overflow-y-auto pr-0.5">
-          {entries.map((entry) => (
+          {visibleEntries.map((entry) => (
             <article
               key={entry.id}
               className="group rounded-control border border-hairline bg-elevated/60 p-3 transition-colors duration-150 ease-out-quart hover:border-hairline-strong"

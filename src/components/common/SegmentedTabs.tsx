@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ClipboardList, Pin, StickyNote } from "lucide-react";
+import { ClipboardList, Pin } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useUiStore } from "../../stores/ui";
 import type { TabId } from "../../types";
@@ -12,7 +12,6 @@ interface TabDef {
 
 const TABS: readonly TabDef[] = [
   { id: "clipboard", label: "Clipboard", icon: ClipboardList },
-  { id: "notes", label: "Notes", icon: StickyNote },
   { id: "snippets", label: "Snippets", icon: Pin },
 ];
 

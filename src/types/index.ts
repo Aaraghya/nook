@@ -1,5 +1,5 @@
 /**
- * Shared domain types for Pocket.
+ * Shared domain types for Nook.
  *
  * Each module's types live here so the frontend, Rust commands and future
  * services agree on one shape. Types marked "M3"/"M4"/"M5" correspond to the
@@ -8,7 +8,7 @@
  */
 
 /** Which section of the panel is currently open. */
-export type TabId = "clipboard" | "notes" | "snippets";
+export type TabId = "clipboard" | "snippets";
 
 /* ------------------------------------------------------------------ */
 /* Music — "Now Playing" (consumed from Milestone 3 onward)            */
@@ -44,19 +44,6 @@ export interface ClipboardEntry {
   /** ISO 8601 timestamp of when the entry was captured. */
   capturedAt: string;
   pinned: boolean;
-}
-
-/* ------------------------------------------------------------------ */
-/* Notes — "Pinboard" (consumed from Milestone 5 onward)               */
-/* ------------------------------------------------------------------ */
-
-export interface Note {
-  id: string;
-  title: string;
-  body: string;
-  pinned: boolean;
-  createdAt: string;
-  updatedAt: string;
 }
 
 /* ------------------------------------------------------------------ */

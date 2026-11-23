@@ -1,13 +1,13 @@
 [package]
-name = "pocket"
+name = "nook"
 version = "0.1.0"
 description = "A lightweight personal desktop companion for Windows"
 edition = "2021"
 
 # Tauri convention: the mobile/embedded lib targets need a distinct crate
-# name so they never clash with the `pocket` binary on Windows.
+# name so they never clash with the `nook` binary on Windows.
 [lib]
-name = "pocket_lib"
+name = "nook_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]

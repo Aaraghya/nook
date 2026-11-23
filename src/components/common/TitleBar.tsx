@@ -23,7 +23,7 @@ export function TitleBar() {
           data-tauri-drag-region
           className="text-[13px] font-semibold tracking-wide"
         >
-          Pocket
+          Nook
         </span>
       </div>
 

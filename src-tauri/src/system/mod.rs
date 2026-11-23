@@ -45,7 +45,7 @@ pub fn toggle_main(app: &AppHandle) {
 }
 
 fn build_tray(app: &AppHandle) -> tauri::Result<()> {
-    let toggle = MenuItem::with_id(app, "toggle", "Open Pocket", true, None::<&str>)?;
+    let toggle = MenuItem::with_id(app, "toggle", "Open Nook", true, None::<&str>)?;
     let autostart = CheckMenuItem::with_id(
         app,
         "autostart",
@@ -60,8 +60,8 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
 
     app.manage(AutostartToggle(autostart));
 
-    let mut builder = TrayIconBuilder::with_id("pocket-tray")
-        .tooltip("Pocket")
+    let mut builder = TrayIconBuilder::with_id("nook-tray")
+        .tooltip("Nook")
         .menu(&menu)
         .show_menu_on_left_click(false)
         .on_menu_event(|app, event| match event.id().as_ref() {

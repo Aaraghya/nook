@@ -1,7 +1,7 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "Permissions for the Pocket main window. Window show/hide/set-focus are granted now so Milestone 2 (tray + global shortcut) needs no capability churn.",
+  "description": "Permissions for the Nook main window. Window show/hide/set-focus are granted now so Milestone 2 (tray + global shortcut) needs no capability churn.",
   "windows": ["main"],
   "permissions": [
     "core:default",

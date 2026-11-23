@@ -1,4 +1,4 @@
-//! Pocket application entry point.
+//! Nook application entry point.
 //!
 //! Modules mirror the product's feature boundaries. Each module is
 //! deliberately empty until its milestone lands, so later integration is
@@ -7,7 +7,6 @@
 //! - `commands`  — Tauri command handlers, one file per feature area
 //! - `music`     — GSMTC media session integration (Milestone 3)
 //! - `clipboard` — clipboard monitoring + history (Milestone 4)
-//! - `notes`     — Pinboard CRUD over SQLite (Milestone 5)
 //! - `snippets`  — pinned snippet storage (Milestone 5)
 //! - `system`    — tray, single instance, global shortcuts (Milestone 2)
 //! - `storage`   — SQLite pool management + migrations
@@ -18,7 +17,6 @@ use tauri::Manager;
 mod clipboard;
 mod commands;
 mod music;
-mod notes;
 mod snippets;
 mod state;
 mod storage;
@@ -45,11 +43,6 @@ pub fn run() {
             commands::clipboard::clipboard_copy,
             commands::clipboard::clipboard_toggle_pin,
             commands::clipboard::clipboard_delete,
-            commands::notes::notes_list,
-            commands::notes::notes_create,
-            commands::notes::notes_update,
-            commands::notes::notes_toggle_pin,
-            commands::notes::notes_delete,
             commands::snippets::snippets_list,
             commands::snippets::snippets_create,
             commands::snippets::snippets_update,

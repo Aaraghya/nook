@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from "react";
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {
-  /** Elevated surface container — the base unit of Pocket's layout. */
+  /** Elevated surface container — the base unit of Nook's layout. */
 }
 
 /** Elevated surface with hairline border and soft shadow. */

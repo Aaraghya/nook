@@ -9,7 +9,7 @@ interface UiState {
 
 /**
  * UI-only state (which tab is open, etc.). Module data lives in its own
- * store per feature (music, clipboard, notes, snippets) once those
+ * store per feature (music, clipboard, snippets) once those
  * milestones land, keeping this store trivial and predictable.
  */
 export const useUiStore = create<UiState>((set) => ({

@@ -4,14 +4,12 @@ import { ClipboardPanel } from "./components/Clipboard/ClipboardPanel";
 import { MusicCard } from "./components/MusicPlayer/MusicCard";
 import { SegmentedTabs } from "./components/common/SegmentedTabs";
 import { TitleBar } from "./components/common/TitleBar";
-import { NotesPanel } from "./components/Notes/NotesPanel";
 import { SnippetsPanel } from "./components/Snippets/SnippetsPanel";
 import { useUiStore } from "./stores/ui";
 import type { TabId } from "./types";
 
 const TAB_PANELS: Record<TabId, ComponentType> = {
   clipboard: ClipboardPanel,
-  notes: NotesPanel,
   snippets: SnippetsPanel,
 };
 
