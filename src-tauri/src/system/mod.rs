@@ -3,7 +3,9 @@ use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent}
 use tauri::{AppHandle, LogicalPosition, Manager, WebviewWindow, Window, WindowEvent, Wry};
 use tauri_plugin_autostart::ManagerExt as _;
 use tauri_plugin_global_shortcut::{GlobalShortcutExt as _, ShortcutState};
+use windows::core::w;
 use windows::Win32::Foundation::RECT;
+use windows::Win32::System::Registry::{RegSetKeyValueW, HKEY_CURRENT_USER, REG_SZ};
 use windows::Win32::UI::WindowsAndMessaging::{
     SystemParametersInfoW, SPI_GETWORKAREA, SPIF_UPDATEINIFILE,
 };
@@ -16,9 +18,47 @@ struct AutostartToggle(CheckMenuItem<Wry>);
 
 pub fn setup(app: &mut tauri::App) -> Result<(), Box<dyn std::error::Error>> {
     build_tray(app.handle())?;
+    ensure_watcher();
     register_shortcut(app.handle());
     dock_main_window(app.handle());
     Ok(())
+}
+
+fn ensure_watcher() {
+    let Ok(exe) = std::env::current_exe() else {
+        return;
+    };
+    let mut command = std::process::Command::new(&exe);
+    command.arg("--watcher");
+    #[cfg(not(debug_assertions))]
+    {
+        use std::process::Stdio;
+        command
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null());
+    }
+    match command.spawn() {
+        Ok(child) => eprintln!("ensure_watcher: spawned watcher pid {}", child.id()),
+        Err(error) => eprintln!("ensure_watcher: spawn failed: {error}"),
+    }
+    let command_line: Vec<u16> = format!("\"{}\" --watcher", exe.display())
+        .encode_utf16()
+        .chain(std::iter::once(0))
+        .collect();
+    unsafe {
+        let result = RegSetKeyValueW(
+            HKEY_CURRENT_USER,
+            w!("Software\\Microsoft\\Windows\\CurrentVersion\\Run"),
+            w!("NookHotkeyWatcher"),
+            REG_SZ.0 as u32,
+            Some(command_line.as_ptr() as *const core::ffi::c_void),
+            (command_line.len() * 2) as u32,
+        );
+        if result.is_err() {
+            eprintln!("ensure_watcher: registry write failed");
+        }
+    }
 }
 
 fn dock_main_window(app: &AppHandle) {

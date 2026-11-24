@@ -2,5 +2,9 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
+    if std::env::args().any(|arg| arg == "--watcher") {
+        nook_lib::watcher::run();
+        return;
+    }
     nook_lib::run()
 }
