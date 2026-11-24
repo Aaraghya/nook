@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import type { ComponentType } from "react";
 import { ClipboardPanel } from "./components/Clipboard/ClipboardPanel";
 import { MusicCard } from "./components/MusicPlayer/MusicCard";
+import { ClearAllButton } from "./components/common/ClearAllButton";
 import { SegmentedTabs } from "./components/common/SegmentedTabs";
 import { TitleBar } from "./components/common/TitleBar";
 import { SnippetsPanel } from "./components/Snippets/SnippetsPanel";
@@ -26,7 +27,12 @@ export default function App() {
       <TitleBar />
       <main className="flex min-h-0 flex-1 flex-col gap-3 px-4 pb-4">
         <MusicCard />
-        <SegmentedTabs />
+        <div className="flex shrink-0 items-center gap-2">
+          <div className="min-w-0 flex-1">
+            <SegmentedTabs />
+          </div>
+          <ClearAllButton />
+        </div>
         <div className="min-h-0 flex-1">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div

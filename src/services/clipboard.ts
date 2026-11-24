@@ -43,3 +43,7 @@ export function toggleClipboardEntryPin(id: string): Promise<void> {
 export function deleteClipboardEntry(id: string): Promise<void> {
   return invoke("clipboard_delete", { id });
 }
+
+export function clearClipboardEntries(): Promise<void> {
+  return invoke("clipboard_clear");
+}

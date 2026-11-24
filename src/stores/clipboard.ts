@@ -7,6 +7,7 @@ interface ClipboardStore {
   applyNewEntry: (entry: ClipboardEntry) => void;
   togglePin: (id: string) => void;
   deleteEntry: (id: string) => void;
+  clear: () => void;
 }
 
 export const useClipboardStore = create<ClipboardStore>((set) => ({
@@ -31,4 +32,5 @@ export const useClipboardStore = create<ClipboardStore>((set) => ({
     set((state) => ({
       entries: state.entries.filter((entry) => entry.id !== id),
     })),
+  clear: () => set({ entries: [] }),
 }));

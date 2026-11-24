@@ -6,6 +6,7 @@ interface SnippetsStore {
   setSnippets: (snippets: Snippet[]) => void;
   upsert: (snippet: Snippet) => void;
   remove: (id: string) => void;
+  clear: () => void;
 }
 
 export const useSnippetsStore = create<SnippetsStore>((set) => ({
@@ -23,4 +24,5 @@ export const useSnippetsStore = create<SnippetsStore>((set) => ({
     set((state) => ({
       snippets: state.snippets.filter((existing) => existing.id !== id),
     })),
+  clear: () => set({ snippets: [] }),
 }));

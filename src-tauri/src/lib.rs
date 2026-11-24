@@ -43,11 +43,13 @@ pub fn run() {
             commands::clipboard::clipboard_copy,
             commands::clipboard::clipboard_toggle_pin,
             commands::clipboard::clipboard_delete,
+            commands::clipboard::clipboard_clear,
             commands::snippets::snippets_list,
             commands::snippets::snippets_create,
             commands::snippets::snippets_update,
             commands::snippets::snippets_delete,
             commands::snippets::snippets_copy,
+            commands::snippets::snippets_clear,
         ])
         .setup(|app| {
             let connection = storage::init(app.handle())?;

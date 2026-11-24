@@ -60,3 +60,7 @@ export function copySnippet(id: string): Promise<void> {
 export function deleteSnippet(id: string): Promise<void> {
   return invoke("snippets_delete", { id });
 }
+
+export function clearSnippets(): Promise<void> {
+  return invoke("snippets_clear");
+}

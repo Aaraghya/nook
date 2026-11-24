@@ -39,6 +39,12 @@ pub fn snippets_delete(db: State<Db>, id: String) -> Result<(), String> {
 }
 
 #[tauri::command]
+pub fn snippets_clear(db: State<Db>) -> Result<(), String> {
+    let connection = db.0.lock().unwrap();
+    crate::snippets::clear_all(&connection)
+}
+
+#[tauri::command]
 pub fn snippets_copy(db: State<Db>, id: String) -> Result<(), String> {
     let connection = db.0.lock().unwrap();
     let content = crate::snippets::content_of(&connection, &id)?;

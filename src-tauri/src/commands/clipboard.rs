@@ -50,3 +50,8 @@ pub fn clipboard_delete(state: State<ClipboardState>, id: String) -> Result<(), 
         Ok(())
     }
 }
+
+#[tauri::command]
+pub fn clipboard_clear(state: State<ClipboardState>) {
+    state.history.lock().unwrap().clear();
+}

@@ -1,18 +1,54 @@
 use tauri::menu::{CheckMenuItem, Menu, MenuItem, PredefinedMenuItem};
 use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
-use tauri::{AppHandle, Manager, Window, WindowEvent, Wry};
+use tauri::{AppHandle, LogicalPosition, Manager, WebviewWindow, Window, WindowEvent, Wry};
 use tauri_plugin_autostart::ManagerExt as _;
 use tauri_plugin_global_shortcut::{GlobalShortcutExt as _, ShortcutState};
+use windows::Win32::Foundation::RECT;
+use windows::Win32::UI::WindowsAndMessaging::{
+    SystemParametersInfoW, SPI_GETWORKAREA, SPIF_UPDATEINIFILE,
+};
 
 const GLOBAL_SHORTCUT: &str = "Alt+Space";
 const MAIN_WINDOW: &str = "main";
+const TASKBAR_MARGIN: i32 = 12;
 
 struct AutostartToggle(CheckMenuItem<Wry>);
 
 pub fn setup(app: &mut tauri::App) -> Result<(), Box<dyn std::error::Error>> {
     build_tray(app.handle())?;
     register_shortcut(app.handle());
+    dock_main_window(app.handle());
     Ok(())
+}
+
+fn dock_main_window(app: &AppHandle) {
+    let Some(window) = app.get_webview_window(MAIN_WINDOW) else {
+        return;
+    };
+    if let Some(position) = taskbar_anchor_position(&window) {
+        let _ = window.set_position(position);
+    }
+    let _ = window.show();
+}
+
+fn taskbar_anchor_position(window: &WebviewWindow) -> Option<LogicalPosition<f64>> {
+    let mut work_area = RECT::default();
+    let result = unsafe {
+        SystemParametersInfoW(
+            SPI_GETWORKAREA,
+            0,
+            Some(&mut work_area as *mut RECT as *mut core::ffi::c_void),
+            SPIF_UPDATEINIFILE,
+        )
+    };
+    if result.is_err() {
+        return None;
+    }
+    let scale = window.scale_factor().ok().unwrap_or(1.0);
+    let size = window.outer_size().ok()?;
+    let x = (work_area.right - size.width as i32 - TASKBAR_MARGIN).max(0) as f64 / scale;
+    let y = (work_area.bottom - size.height as i32 - TASKBAR_MARGIN).max(0) as f64 / scale;
+    Some(LogicalPosition::new(x, y))
 }
 
 pub fn handle_window_event(window: &Window, event: &WindowEvent) {

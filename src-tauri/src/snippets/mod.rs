@@ -92,6 +92,13 @@ pub fn update(
     fetch(connection, numeric_id)
 }
 
+pub fn clear_all(connection: &Connection) -> Result<(), String> {
+    connection
+        .execute("DELETE FROM snippets", [])
+        .map_err(|error| error.to_string())?;
+    Ok(())
+}
+
 pub fn delete(connection: &Connection, id: &str) -> Result<(), String> {
     let numeric_id = parse_id(id)?;
     let changed = connection
