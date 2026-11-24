@@ -14,6 +14,7 @@
 
 use tauri::Manager;
 
+mod calendar;
 mod clipboard;
 mod commands;
 mod music;
@@ -55,6 +56,7 @@ pub fn run() {
             commands::snippets::snippets_delete,
             commands::snippets::snippets_copy,
             commands::snippets::snippets_clear,
+            commands::calendar::calendar_open_event,
         ])
         .setup(|app| {
             let connection = storage::init(app.handle())?;

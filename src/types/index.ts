@@ -8,7 +8,7 @@
  */
 
 /** Which section of the panel is currently open. */
-export type TabId = "clipboard" | "snippets";
+export type TabId = "clipboard" | "snippets" | "calendar";
 
 /* ------------------------------------------------------------------ */
 /* Music — "Now Playing" (consumed from Milestone 3 onward)            */

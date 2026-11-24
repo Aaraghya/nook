@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import type { ComponentType } from "react";
+import { CalendarPanel } from "./components/Calendar/CalendarPanel";
 import { ClipboardPanel } from "./components/Clipboard/ClipboardPanel";
 import { MusicCard } from "./components/MusicPlayer/MusicCard";
 import { ClearAllButton } from "./components/common/ClearAllButton";
@@ -12,6 +13,7 @@ import type { TabId } from "./types";
 const TAB_PANELS: Record<TabId, ComponentType> = {
   clipboard: ClipboardPanel,
   snippets: SnippetsPanel,
+  calendar: CalendarPanel,
 };
 
 /**
