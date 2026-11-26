@@ -2,7 +2,7 @@
 
 nook is a lightweight windows desktop companion for the small tasks you do most while using your computer.
 
-i got tired of opening three different tabs to handle simple everyday tasks, so i made nook instead. it is also my experiment with rust as i learn and build with a new programming language.
+i got tired of opening three different tabs to handle simple everyday tasks, so i made nook instead. it's also my experiment with rust as i learn and build with a new programming language.
 
 ## what nook does
 
@@ -26,7 +26,6 @@ calendar shortcuts apply when the calendar panel is focused. the add-entry short
 ## download nook
 
 download the latest version from the [nook releases page](https://github.com/Aaraghya/nook/releases/latest).
-
 for most users, download:
 
 ```text
@@ -38,42 +37,29 @@ this is the recommended installer.
 ## installing nook on windows
 
 1. open the [latest nook release](https://github.com/Aaraghya/nook/releases/latest) on github.
-
 2. scroll down to the **assets** section.
-
 3. download `Nook_0.2.0_x64-setup.exe`.
-
 4. open the downloaded installer from your browser's downloads list or from your windows downloads folder.
-
 5. if windows displays a security warning, confirm that the file came from the official nook github releases page. nook is currently unsigned, so windows may display a smartscreen warning.
-
 6. if you trust the download, select **more info**, then select **run anyway**.
-
 7. follow the installation prompts.
-
 8. once installation is complete, launch nook from the start menu or desktop shortcut if one was created.
-
 9. nook will start in the background and can be summoned or hidden from anywhere with:
 
 ```text
 ctrl + shift + n
 ```
 
-10. nook can remain available from the windows system tray. right-click its tray icon to access system actions.
-
 ## alternative downloads
 
 the release page also includes two alternatives:
-
 - `Nook_0.2.0_x64_en-US.msi` - an msi installer for users or environments that prefer windows installer packages
 - `nook.exe` - a portable version that can be launched without installation
-
+- 
 the portable version does not need to be placed in a specific folder. download it, open it, and nook will run. its data is still stored locally in your windows user profile.
 
 ## your data and privacy
-
 nook does not require an account or sign-in.
-
 your calendar entries, clipstack history, and snippets are stored locally at:
 
 ```text
@@ -81,13 +67,11 @@ your calendar entries, clipstack history, and snippets are stored locally at:
 ```
 
 each windows user and computer has its own local database. downloading nook from github does not give anyone access to another user's entries.
-
 nook only leaves your computer when you choose to open a link in google calendar or interact with an external service yourself.
 
 ## building nook from source
 
 most users should download the installer from the releases page. building from source is intended for developers or contributors.
-
 you will need:
 
 - windows 10 or windows 11
@@ -115,6 +99,8 @@ build a release version with:
 ```bash
 npm run tauri build
 ```
+
+for any questions / suggestions, hmu @ aaraghya1@gmail.com ! ty <3
 
 the built application and installers will be generated inside:
 
