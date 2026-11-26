@@ -55,7 +55,7 @@ ctrl + shift + n
 the release page also includes two alternatives:
 - `Nook_0.2.0_x64_en-US.msi` - an msi installer for users or environments that prefer windows installer packages
 - `nook.exe` - a portable version that can be launched without installation
-- 
+  
 the portable version does not need to be placed in a specific folder. download it, open it, and nook will run. its data is still stored locally in your windows user profile.
 
 ## your data and privacy
