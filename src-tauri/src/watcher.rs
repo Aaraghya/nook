@@ -5,7 +5,7 @@ use windows::core::w;
 use windows::Win32::Foundation::GetLastError;
 use windows::Win32::System::Threading::CreateMutexW;
 use windows::Win32::UI::Input::KeyboardAndMouse::{
-    RegisterHotKey, UnregisterHotKey, HOT_KEY_MODIFIERS, MOD_ALT, MOD_NOREPEAT, VK_SPACE,
+    RegisterHotKey, UnregisterHotKey, HOT_KEY_MODIFIERS, MOD_CONTROL, MOD_NOREPEAT, MOD_SHIFT, VK_N,
 };
 use windows::Win32::UI::WindowsAndMessaging::{GetMessageW, MSG, WM_HOTKEY};
 
@@ -28,8 +28,8 @@ pub fn run() {
             RegisterHotKey(
                 None,
                 HOTKEY_ID,
-                HOT_KEY_MODIFIERS(MOD_ALT.0 | MOD_NOREPEAT.0),
-                VK_SPACE.0 as u32,
+                HOT_KEY_MODIFIERS(MOD_CONTROL.0 | MOD_SHIFT.0 | MOD_NOREPEAT.0),
+                VK_N.0 as u32,
             )
         };
         match result {

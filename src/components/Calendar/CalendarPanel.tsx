@@ -63,6 +63,8 @@ export function CalendarPanel() {
   const entries = useCalendarStore((s) => s.entries);
   const activeId = useCalendarStore((s) => s.activeId);
   const focusNonce = useCalendarStore((s) => s.focusNonce);
+  const entryLimitError = useCalendarStore((s) => s.entryLimitError);
+  const loadEntries = useCalendarStore((s) => s.loadEntries);
   const addEntry = useCalendarStore((s) => s.addEntry);
   const selectEntry = useCalendarStore((s) => s.selectEntry);
   const collapseEntry = useCalendarStore((s) => s.collapseEntry);
@@ -79,6 +81,10 @@ export function CalendarPanel() {
   const activeSectionRef = useRef<HTMLElement | null>(null);
 
   const activeEntry = entries.find((entry) => entry.id === activeId);
+
+  useEffect(() => {
+    void loadEntries();
+  }, [loadEntries]);
 
   useEffect(() => {
     return () => {
@@ -164,16 +170,21 @@ export function CalendarPanel() {
             Google Calendar
           </span>
         </div>
-        <button
-          type="button"
-          onClick={() => addEntry()}
-          aria-label="Add calendar entry"
-          title="Add calendar entry (Shift + +)"
-          className="inline-flex h-6 cursor-pointer items-center gap-1 rounded-full border border-hairline bg-elevated px-2 text-[11px] font-medium text-ink-secondary transition-colors duration-150 ease-out-quart outline-none hover:border-hairline-strong hover:bg-raised hover:text-ink focus-visible:ring-1 focus-visible:ring-hairline-strong"
-        >
-          <Plus size={12} strokeWidth={2} className="text-amber-400" />
-          <span className="text-[10px] text-ink-muted">Shift++</span>
-        </button>
+        <div className="flex items-center gap-2">
+          {entryLimitError !== null && (
+            <span className="text-[10px] text-danger">10 entries max</span>
+          )}
+          <button
+            type="button"
+            onClick={() => addEntry()}
+            aria-label="Add calendar entry"
+            title="Add calendar entry (Shift + +)"
+            className="inline-flex h-6 cursor-pointer items-center gap-1 rounded-full border border-hairline bg-elevated px-2 text-[11px] font-medium text-ink-secondary transition-colors duration-150 ease-out-quart outline-none hover:border-hairline-strong hover:bg-raised hover:text-ink focus-visible:ring-1 focus-visible:ring-hairline-strong"
+          >
+            <Plus size={12} strokeWidth={2} className="text-amber-400" />
+            <span className="text-[10px] text-ink-muted">Shift++</span>
+          </button>
+        </div>
       </header>
 
       <div className="min-h-0 flex-1 space-y-2 overflow-y-auto pr-0.5">

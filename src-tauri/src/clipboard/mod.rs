@@ -234,19 +234,15 @@ fn write_open_clipboard(text: &str) -> Result<(), String> {
     let mut units: Vec<u16> = text.encode_utf16().collect();
     units.push(0);
     let byte_len = units.len() * 2;
-    let handle = unsafe { GlobalAlloc(GMEM_MOVEABLE, byte_len) }
-        .map_err(|error| error.to_string())?;
+    let handle =
+        unsafe { GlobalAlloc(GMEM_MOVEABLE, byte_len) }.map_err(|error| error.to_string())?;
     let pointer = unsafe { GlobalLock(handle) };
     if pointer.is_null() {
         let _ = unsafe { GlobalFree(Some(handle)) };
         return Err("clipboard memory lock failed".to_string());
     }
     unsafe {
-        core::ptr::copy_nonoverlapping(
-            units.as_ptr().cast::<u8>(),
-            pointer.cast::<u8>(),
-            byte_len,
-        );
+        core::ptr::copy_nonoverlapping(units.as_ptr().cast::<u8>(), pointer.cast::<u8>(), byte_len);
     }
     let _ = unsafe { GlobalUnlock(handle) };
     match unsafe { SetClipboardData(CF_UNICODETEXT, Some(HANDLE(handle.0))) } {
@@ -281,9 +277,7 @@ fn read_open_clipboard() -> Option<String> {
         return None;
     }
     let byte_count = unsafe { GlobalSize(global) };
-    let units = unsafe {
-        core::slice::from_raw_parts(pointer as *const u16, byte_count / 2)
-    };
+    let units = unsafe { core::slice::from_raw_parts(pointer as *const u16, byte_count / 2) };
     let length = units
         .iter()
         .position(|unit| *unit == 0)
@@ -328,7 +322,10 @@ mod tests {
         let _e4 = insert_entry(&conn, "newer", 4000).unwrap();
         let reloaded = load_entries(&conn).unwrap();
         let reloaded_contents: Vec<&str> = reloaded.iter().map(|e| e.content.as_str()).collect();
-        assert_eq!(reloaded_contents, vec!["middle", "oldest", "newer", "newest"]);
+        assert_eq!(
+            reloaded_contents,
+            vec!["middle", "oldest", "newer", "newest"]
+        );
 
         set_entry_pinned(&conn, &e2.id, false).unwrap();
         let after_unpin = load_entries(&conn).unwrap();

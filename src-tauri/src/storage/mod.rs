@@ -26,6 +26,13 @@ CREATE TABLE IF NOT EXISTS clipboard_entries (
     captured_at_ms INTEGER NOT NULL,
     pinned INTEGER NOT NULL DEFAULT 0
 );
+CREATE TABLE IF NOT EXISTS calendar_entries (
+    id TEXT PRIMARY KEY,
+    input TEXT NOT NULL DEFAULT '',
+    phase TEXT NOT NULL DEFAULT 'edit',
+    created_at_ms INTEGER NOT NULL,
+    updated_at_ms INTEGER NOT NULL
+);
 ";
 
 pub fn init(app: &AppHandle) -> Result<Connection, String> {
@@ -33,8 +40,7 @@ pub fn init(app: &AppHandle) -> Result<Connection, String> {
         .path()
         .app_data_dir()
         .map_err(|error| format!("app data dir unavailable: {error}"))?;
-    std::fs::create_dir_all(&dir)
-        .map_err(|error| format!("data dir create failed: {error}"))?;
+    std::fs::create_dir_all(&dir).map_err(|error| format!("data dir create failed: {error}"))?;
     let connection = Connection::open(dir.join("pocket.db"))
         .map_err(|error| format!("database open failed: {error}"))?;
     connection

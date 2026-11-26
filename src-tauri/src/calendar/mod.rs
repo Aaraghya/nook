@@ -48,9 +48,8 @@ pub fn build_eventedit_url(
 
 pub fn open_eventedit_url(url: &str) -> Result<(), String> {
     let url_hstring = HSTRING::from(url);
-    let instance = unsafe {
-        ShellExecuteW(None, w!("open"), &url_hstring, None, None, SW_SHOWNORMAL)
-    };
+    let instance =
+        unsafe { ShellExecuteW(None, w!("open"), &url_hstring, None, None, SW_SHOWNORMAL) };
     if instance.0 as usize > 32 {
         Ok(())
     } else {

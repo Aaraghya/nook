@@ -57,6 +57,10 @@ pub fn run() {
             commands::snippets::snippets_copy,
             commands::snippets::snippets_clear,
             commands::calendar::calendar_open_event,
+            commands::calendar::calendar_get_entries,
+            commands::calendar::calendar_save_entry,
+            commands::calendar::calendar_delete_entry,
+            commands::calendar::calendar_clear_entries,
         ])
         .setup(|app| {
             let connection = storage::init(app.handle())?;

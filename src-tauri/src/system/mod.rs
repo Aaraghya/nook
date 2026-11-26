@@ -7,10 +7,10 @@ use windows::core::w;
 use windows::Win32::Foundation::RECT;
 use windows::Win32::System::Registry::{RegSetKeyValueW, HKEY_CURRENT_USER, REG_SZ};
 use windows::Win32::UI::WindowsAndMessaging::{
-    SystemParametersInfoW, SPI_GETWORKAREA, SPIF_UPDATEINIFILE,
+    SystemParametersInfoW, SPIF_UPDATEINIFILE, SPI_GETWORKAREA,
 };
 
-const GLOBAL_SHORTCUT: &str = "Alt+Space";
+const GLOBAL_SHORTCUT: &str = "Ctrl+Shift+N";
 const MAIN_WINDOW: &str = "main";
 const TASKBAR_MARGIN: i32 = 12;
 
@@ -110,8 +110,8 @@ pub fn show_main(app: &AppHandle) {
 
 pub fn toggle_main(app: &AppHandle) {
     if let Some(window) = app.get_webview_window(MAIN_WINDOW) {
-        let visible = window.is_visible().unwrap_or(false)
-            && !window.is_minimized().unwrap_or(false);
+        let visible =
+            window.is_visible().unwrap_or(false) && !window.is_minimized().unwrap_or(false);
         if visible {
             let _ = window.hide();
         } else {
@@ -166,11 +166,13 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
 }
 
 fn register_shortcut(app: &AppHandle) {
-    let registration = app.global_shortcut().on_shortcut(GLOBAL_SHORTCUT, |app, _shortcut, event| {
-        if event.state() == ShortcutState::Pressed {
-            toggle_main(app);
-        }
-    });
+    let registration =
+        app.global_shortcut()
+            .on_shortcut(GLOBAL_SHORTCUT, |app, _shortcut, event| {
+                if event.state() == ShortcutState::Pressed {
+                    toggle_main(app);
+                }
+            });
     if let Err(error) = registration {
         eprintln!("global shortcut registration failed: {error}");
     }

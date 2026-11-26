@@ -3,20 +3,16 @@ mod types;
 use std::sync::Mutex;
 use std::thread;
 
-use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
+use base64::Engine as _;
 use tauri::{AppHandle, Emitter, Manager};
 use windows::Foundation::TypedEventHandler;
 use windows::Media::Control::{
-    CurrentSessionChangedEventArgs,
-    GlobalSystemMediaTransportControlsSession,
+    CurrentSessionChangedEventArgs, GlobalSystemMediaTransportControlsSession,
     GlobalSystemMediaTransportControlsSessionManager,
     GlobalSystemMediaTransportControlsSessionMediaProperties,
-    GlobalSystemMediaTransportControlsSessionPlaybackStatus,
-    MediaPropertiesChangedEventArgs,
-    PlaybackInfoChangedEventArgs,
-    SessionsChangedEventArgs,
-    TimelinePropertiesChangedEventArgs,
+    GlobalSystemMediaTransportControlsSessionPlaybackStatus, MediaPropertiesChangedEventArgs,
+    PlaybackInfoChangedEventArgs, SessionsChangedEventArgs, TimelinePropertiesChangedEventArgs,
 };
 use windows::Storage::Streams::DataReader;
 
@@ -104,10 +100,7 @@ fn start(app: &AppHandle) {
     });
 }
 
-fn watch_session(
-    app: &AppHandle,
-    session: &GlobalSystemMediaTransportControlsSession,
-) {
+fn watch_session(app: &AppHandle, session: &GlobalSystemMediaTransportControlsSession) {
     let media_handler = TypedEventHandler::<
         GlobalSystemMediaTransportControlsSession,
         MediaPropertiesChangedEventArgs,
@@ -207,16 +200,12 @@ fn spawn_current(app: AppHandle, next: Option<GlobalSystemMediaTransportControls
     });
 }
 
-fn is_current(
-    app: &AppHandle,
-    session: &GlobalSystemMediaTransportControlsSession,
-) -> bool {
+fn is_current(app: &AppHandle, session: &GlobalSystemMediaTransportControlsSession) -> bool {
     let key = session
         .SourceAppUserModelId()
         .ok()
         .map(|value| value.to_string());
-    key.is_some()
-        && key == *app.state::<MusicState>().session_key.lock().unwrap()
+    key.is_some() && key == *app.state::<MusicState>().session_key.lock().unwrap()
 }
 
 fn refresh_track(app: &AppHandle, session: &GlobalSystemMediaTransportControlsSession) {
@@ -228,7 +217,10 @@ fn refresh_track(app: &AppHandle, session: &GlobalSystemMediaTransportControlsSe
         }
     };
 
-    let title = properties.Title().map(|v| v.to_string()).unwrap_or_default();
+    let title = properties
+        .Title()
+        .map(|v| v.to_string())
+        .unwrap_or_default();
     let artist = properties
         .Artist()
         .map(|v| v.to_string())
@@ -287,7 +279,9 @@ fn refresh_progress(app: &AppHandle, session: &GlobalSystemMediaTransportControl
         .GetPlaybackInfo()
         .ok()
         .and_then(|info| info.PlaybackStatus().ok())
-        .is_some_and(|status| status == GlobalSystemMediaTransportControlsSessionPlaybackStatus::Playing);
+        .is_some_and(|status| {
+            status == GlobalSystemMediaTransportControlsSessionPlaybackStatus::Playing
+        });
 
     let state = app.state::<MusicState>();
     let changed = {
