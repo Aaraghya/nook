@@ -7,11 +7,10 @@ i got tired of opening three different tabs to handle simple everyday tasks, so 
 ## what nook does
 
 - **clipstack** - clipboard history with search, pinning, and one-click copy-back
-- **snippets** - reusable text snippets, saved locally
 - **now playing** - see and control media playing on your pc
 - **calendar** - parse natural-language events, save them persistently, and open them in google calendar
 - **system tray** - keep nook running quietly and launch it at startup
-- **local-first storage** - calendar, clipstack, and snippets stay on your machine
+- **local-first storage** - calendar and clipstack stay on your machine
 
 ### keyboard shortcuts
 
@@ -19,7 +18,7 @@ i got tired of opening three different tabs to handle simple everyday tasks, so 
 - **shift + +** - add a new calendar entry
 - **enter** - preview a calendar entry, or open it in google calendar from its preview
 - **shift + enter** - return to editing a calendar entry
-- **escape** - clear a calendar draft, return to editing, cancel delete confirmation, or close the snippets editor
+- **escape** - clear a calendar draft, return to editing, or cancel delete confirmation
 
 calendar shortcuts apply when the calendar panel is focused. the add-entry shortcut does not trigger while typing in an input field.
 
@@ -29,7 +28,7 @@ download the latest version from the [nook releases page](https://github.com/Aar
 for most users, download:
 
 ```text
-Nook_0.2.0_x64-setup.exe
+Nook_0.3.0_x64-setup.exe
 ```
 
 this is the recommended installer.
@@ -38,7 +37,7 @@ this is the recommended installer.
 
 1. open the [latest nook release](https://github.com/Aaraghya/nook/releases/latest) on github.
 2. scroll down to the **assets** section.
-3. download `Nook_0.2.0_x64-setup.exe`.
+3. download `Nook_0.3.0_x64-setup.exe`.
 4. open the downloaded installer from your browser's downloads list or from your windows downloads folder.
 5. if windows displays a security warning, confirm that the file came from the official nook github releases page. nook is currently unsigned, so windows may display a smartscreen warning.
 6. if you trust the download, select **more info**, then select **run anyway**.
@@ -53,14 +52,14 @@ ctrl + shift + n
 ## alternative downloads
 
 the release page also includes two alternatives:
-- `Nook_0.2.0_x64_en-US.msi` - an msi installer for users or environments that prefer windows installer packages
+- `Nook_0.3.0_x64_en-US.msi` - an msi installer for users or environments that prefer windows installer packages
 - `nook.exe` - a portable version that can be launched without installation
   
 the portable version does not need to be placed in a specific folder. download it, open it, and nook will run. its data is still stored locally in your windows user profile.
 
 ## your data and privacy
 nook does not require an account or sign-in.
-your calendar entries, clipstack history, and snippets are stored locally at:
+your calendar entries and clipstack history are stored locally at:
 
 ```text
 %appdata%\com.pocket.desktop\pocket.db

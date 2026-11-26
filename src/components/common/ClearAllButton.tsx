@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Trash2 } from "lucide-react";
 import { clearClipboardEntries } from "../../services/clipboard";
-import { clearSnippets } from "../../services/snippets";
 import { useClipboardStore } from "../../stores/clipboard";
 import { useCalendarStore } from "../../stores/calendar";
-import { useSnippetsStore } from "../../stores/snippets";
 import { useUiStore } from "../../stores/ui";
 
 const ARM_MS = 3000;
@@ -15,9 +13,8 @@ export function ClearAllButton() {
   const timer = useRef<number | null>(null);
   const clearClipboard = useClipboardStore((s) => s.clear);
   const clearCalendar = useCalendarStore((s) => s.clearEntries);
-  const clearSnippetsStore = useSnippetsStore((s) => s.clear);
   const activeTab = useUiStore((s) => s.activeTab);
-  const clearLabel = activeTab === "clipboard" ? "ClipStack" : activeTab === "snippets" ? "Snippets" : "Calendar";
+  const clearLabel = activeTab === "clipboard" ? "ClipStack" : "Calendar";
 
   useEffect(() => {
     return () => {
@@ -50,9 +47,6 @@ export function ClearAllButton() {
         if (activeTab === "clipboard") {
           await clearClipboardEntries();
           clearClipboard();
-        } else if (activeTab === "snippets") {
-          await clearSnippets();
-          clearSnippetsStore();
         } else {
           clearCalendar();
         }
@@ -68,7 +62,6 @@ export function ClearAllButton() {
     armed,
     clearCalendar,
     clearClipboard,
-    clearSnippetsStore,
     disarm,
   ]);
 

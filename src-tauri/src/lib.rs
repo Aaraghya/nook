@@ -7,7 +7,6 @@
 //! - `commands`  — Tauri command handlers, one file per feature area
 //! - `music`     — GSMTC media session integration (Milestone 3)
 //! - `clipboard` — clipboard monitoring + history (Milestone 4)
-//! - `snippets`  — pinned snippet storage (Milestone 5)
 //! - `system`    — tray, single instance, global shortcuts (Milestone 2)
 //! - `storage`   — SQLite pool management + migrations
 //! - `state`     — shared application state containers
@@ -18,7 +17,6 @@ mod calendar;
 mod clipboard;
 mod commands;
 mod music;
-mod snippets;
 mod state;
 mod storage;
 mod system;
@@ -50,12 +48,6 @@ pub fn run() {
             commands::clipboard::clipboard_toggle_pin,
             commands::clipboard::clipboard_delete,
             commands::clipboard::clipboard_clear,
-            commands::snippets::snippets_list,
-            commands::snippets::snippets_create,
-            commands::snippets::snippets_update,
-            commands::snippets::snippets_delete,
-            commands::snippets::snippets_copy,
-            commands::snippets::snippets_clear,
             commands::calendar::calendar_open_event,
             commands::calendar::calendar_get_entries,
             commands::calendar::calendar_save_entry,

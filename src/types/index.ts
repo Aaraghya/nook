@@ -8,7 +8,7 @@
  */
 
 /** Which section of the panel is currently open. */
-export type TabId = "clipboard" | "snippets" | "calendar";
+export type TabId = "clipboard" | "calendar";
 
 /* ------------------------------------------------------------------ */
 /* Music — "Now Playing" (consumed from Milestone 3 onward)            */
@@ -44,18 +44,4 @@ export interface ClipboardEntry {
   /** ISO 8601 timestamp of when the entry was captured. */
   capturedAt: string;
   pinned: boolean;
-}
-
-/* ------------------------------------------------------------------ */
-/* Snippets (consumed from Milestone 5 onward)                         */
-/* ------------------------------------------------------------------ */
-
-export interface Snippet {
-  id: string;
-  label: string;
-  content: string;
-  /** Free-form category tag, e.g. "email", "code", "url". */
-  category: string;
-  createdAt: string;
-  updatedAt: string;
 }

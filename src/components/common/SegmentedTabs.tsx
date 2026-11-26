@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Calendar, ClipboardList, Pin } from "lucide-react";
+import { Calendar, ClipboardList } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useUiStore } from "../../stores/ui";
 import type { TabId } from "../../types";
@@ -12,7 +12,6 @@ interface TabDef {
 
 const TABS: readonly TabDef[] = [
   { id: "clipboard", label: "Clipboard", icon: ClipboardList },
-  { id: "snippets", label: "Snippets", icon: Pin },
   { id: "calendar", label: "Calendar", icon: Calendar },
 ];
 

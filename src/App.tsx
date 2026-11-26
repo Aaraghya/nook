@@ -6,13 +6,11 @@ import { MusicCard } from "./components/MusicPlayer/MusicCard";
 import { ClearAllButton } from "./components/common/ClearAllButton";
 import { SegmentedTabs } from "./components/common/SegmentedTabs";
 import { TitleBar } from "./components/common/TitleBar";
-import { SnippetsPanel } from "./components/Snippets/SnippetsPanel";
 import { useUiStore } from "./stores/ui";
 import type { TabId } from "./types";
 
 const TAB_PANELS: Record<TabId, ComponentType> = {
   clipboard: ClipboardPanel,
-  snippets: SnippetsPanel,
   calendar: CalendarPanel,
 };
 

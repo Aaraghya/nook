@@ -1,6 +1,6 @@
 //! SQLite storage management.
 //!
-//! Milestone 5: open the database under the app data directory, run
+//! Open the database under the app data directory, run
 //! migrations, and hand out connections to feature modules. Feature
 //! modules own their tables; this module owns the pool and schema version.
 
@@ -12,14 +12,7 @@ use tauri::{AppHandle, Manager};
 pub struct Db(pub Mutex<Connection>);
 
 const SCHEMA: &str = "
-CREATE TABLE IF NOT EXISTS snippets (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    label TEXT NOT NULL DEFAULT '',
-    content TEXT NOT NULL DEFAULT '',
-    category TEXT NOT NULL DEFAULT '',
-    created_at_ms INTEGER NOT NULL,
-    updated_at_ms INTEGER NOT NULL
-);
+DROP TABLE IF EXISTS snippets;
 CREATE TABLE IF NOT EXISTS clipboard_entries (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     content TEXT NOT NULL,
