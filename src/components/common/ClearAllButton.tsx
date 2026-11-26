@@ -3,7 +3,9 @@ import { Trash2 } from "lucide-react";
 import { clearClipboardEntries } from "../../services/clipboard";
 import { clearSnippets } from "../../services/snippets";
 import { useClipboardStore } from "../../stores/clipboard";
+import { useCalendarStore } from "../../stores/calendar";
 import { useSnippetsStore } from "../../stores/snippets";
+import { useUiStore } from "../../stores/ui";
 
 const ARM_MS = 3000;
 
@@ -12,7 +14,10 @@ export function ClearAllButton() {
   const [clearing, setClearing] = useState(false);
   const timer = useRef<number | null>(null);
   const clearClipboard = useClipboardStore((s) => s.clear);
+  const clearCalendar = useCalendarStore((s) => s.clearEntries);
   const clearSnippetsStore = useSnippetsStore((s) => s.clear);
+  const activeTab = useUiStore((s) => s.activeTab);
+  const clearLabel = activeTab === "clipboard" ? "ClipStack" : activeTab === "snippets" ? "Snippets" : "Calendar";
 
   useEffect(() => {
     return () => {
@@ -40,22 +45,44 @@ export function ClearAllButton() {
     }
     disarm();
     setClearing(true);
-    Promise.all([clearClipboardEntries(), clearSnippets()])
-      .then(() => {
-        clearClipboard();
-        clearSnippetsStore();
-      })
-      .catch(() => {})
-      .finally(() => setClearing(false));
-  }, [armed, disarm, clearClipboard, clearSnippetsStore]);
+    const clearActiveCategory = async () => {
+      try {
+        if (activeTab === "clipboard") {
+          await clearClipboardEntries();
+          clearClipboard();
+        } else if (activeTab === "snippets") {
+          await clearSnippets();
+          clearSnippetsStore();
+        } else {
+          clearCalendar();
+        }
+      } catch {
+        return;
+      } finally {
+        setClearing(false);
+      }
+    };
+    void clearActiveCategory();
+  }, [
+    activeTab,
+    armed,
+    clearCalendar,
+    clearClipboard,
+    clearSnippetsStore,
+    disarm,
+  ]);
 
   return (
     <button
       type="button"
       onClick={handleClick}
       disabled={clearing}
-      aria-label={armed ? "Confirm clear all entries" : "Clear all entries"}
-      title="Clear all ClipStack and Snippets entries"
+      aria-label={
+        armed
+          ? `Confirm clear all ${clearLabel} entries`
+          : `Clear all ${clearLabel} entries`
+      }
+      title={`Clear all ${clearLabel} entries`}
       className={`flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full border transition-colors duration-150 ease-out-quart focus-visible:ring-1 focus-visible:ring-hairline-strong ${
         armed
           ? "border-danger/40 bg-danger/15 text-danger"

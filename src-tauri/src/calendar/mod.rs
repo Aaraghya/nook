@@ -60,3 +60,38 @@ pub fn open_eventedit_url(url: &str) -> Result<(), String> {
         ))
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::build_eventedit_url;
+
+    #[test]
+    fn builds_eventedit_url_with_utc_dates_and_location() {
+        let url = build_eventedit_url(
+            "team meeting",
+            "20261130T033000Z",
+            "20261130T043000Z",
+            Some("the office"),
+            None,
+        );
+        assert_eq!(
+            url,
+            "https://calendar.google.com/calendar/r/eventedit?text=team%20meeting&dates=20261130T033000Z/20261130T043000Z&location=the%20office"
+        );
+    }
+
+    #[test]
+    fn omits_empty_location_and_details() {
+        let url = build_eventedit_url(
+            "lunch with mom",
+            "20261126T033000Z",
+            "20261126T043000Z",
+            Some(""),
+            None,
+        );
+        assert_eq!(
+            url,
+            "https://calendar.google.com/calendar/r/eventedit?text=lunch%20with%20mom&dates=20261126T033000Z/20261126T043000Z"
+        );
+    }
+}

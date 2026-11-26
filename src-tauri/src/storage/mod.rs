@@ -20,6 +20,12 @@ CREATE TABLE IF NOT EXISTS snippets (
     created_at_ms INTEGER NOT NULL,
     updated_at_ms INTEGER NOT NULL
 );
+CREATE TABLE IF NOT EXISTS clipboard_entries (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    content TEXT NOT NULL,
+    captured_at_ms INTEGER NOT NULL,
+    pinned INTEGER NOT NULL DEFAULT 0
+);
 ";
 
 pub fn init(app: &AppHandle) -> Result<Connection, String> {

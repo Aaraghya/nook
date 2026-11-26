@@ -7,7 +7,7 @@ import {
   subscribeClipboardNew,
   toggleClipboardEntryPin,
 } from "../../services/clipboard";
-import { useClipboardStore } from "../../stores/clipboard";
+import { sortClipboardEntries, useClipboardStore } from "../../stores/clipboard";
 import { EmptyState } from "../common/EmptyState";
 import { IconButton } from "../common/IconButton";
 import { SearchInput } from "../common/SearchInput";
@@ -46,8 +46,9 @@ export function ClipboardPanel() {
 
   const visibleEntries = useMemo(() => {
     const needle = query.trim().toLowerCase();
-    if (needle === "") return entries;
-    return entries.filter((entry) =>
+    const sorted = sortClipboardEntries(entries);
+    if (needle === "") return sorted;
+    return sorted.filter((entry) =>
       entry.content.toLowerCase().includes(needle),
     );
   }, [entries, query]);
@@ -118,7 +119,7 @@ export function ClipboardPanel() {
                     <Pin
                       size={11}
                       strokeWidth={1.75}
-                      className="fill-current text-ink-muted"
+                      className="fill-current text-amber-400/90"
                     />
                   )}
                   <time
