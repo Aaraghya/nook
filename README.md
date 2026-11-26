@@ -20,7 +20,7 @@ i got tired of opening three different tabs to handle simple everyday tasks, so 
 - **shift + enter** - return to editing a calendar entry
 - **escape** - clear a calendar draft, return to editing, or cancel delete confirmation
 
-calendar shortcuts apply when the calendar panel is focused. the add-entry shortcut does not trigger while typing in an input field.
+calendar shortcuts apply when the calendar panel is focused.
 
 ## download nook
 
