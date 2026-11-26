@@ -99,11 +99,11 @@ build a release version with:
 ```bash
 npm run tauri build
 ```
-
-for any questions / suggestions, hmu @ aaraghya1@gmail.com ! ty <3
-
 the built application and installers will be generated inside:
 
 ```text
 src-tauri/target/release/
 ```
+
+for any questions / suggestions, hmu @ aaraghya1@gmail.com ! ty <3
+
